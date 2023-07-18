@@ -4,13 +4,15 @@ import { AiFillEyeInvisible, AiFillEye, AiOutlineGoogle } from "react-icons/ai";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { useForm } from "react-hook-form"
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../Provider/AuthProvider';
 
 
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [loading , setLoading] = useState(false);
-    const user = null;
+    const{user,logIn , loading, setLoading} = useContext(AuthContext);
+   
+   
 
 
     const navigate = useNavigate();
@@ -21,22 +23,11 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm()
 
     const onSubmit = (data) => {
-        // console.log(data)
+       
         setLoading(true);
-        signIn(data.email, data.password)
-            .then(res => {
-                const loggedUser = res.user;
-                // toast.success('Successfully logged in!')
-                setLoading(false)
-                navigate(from, { replace: true })
-            })
-            .catch(err => {
-                setLoading(false)
-                // toast.error(err.message)
-
-            })
-
-
+        logIn(data.email, data.password)
+        reset();
+        
     }
 
 
@@ -50,7 +41,7 @@ const Login = () => {
                         <h1 className="text-5xl font-bold mb-6">Login now !</h1>
 
                         <Fade delay={1e3} cascade damping={1e-1}>
-                            Sportify Summer Camp is waiting for welcome you ...
+                            House Hunter is waiting for welcome you ...
                         </Fade>
                     </div>
 
